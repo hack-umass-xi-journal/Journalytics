@@ -11,7 +11,7 @@ import SwiftUI
 struct JournalyticsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomePage()
         }
     }
 }
