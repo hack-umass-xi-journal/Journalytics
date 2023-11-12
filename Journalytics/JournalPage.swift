@@ -10,15 +10,18 @@ import SwiftUI
 struct JournalPage: View {
     @State private var title = ""
     @State private var longResponse = ""
-    private var typesOfJournaling = ["Stream of Consciousness", "Idea", "Prompt-based", "Shadow work", "Day in the Life"]
+    private var typesOfJournaling = ["Flow of Thoughts", "Idea", "Prompt-Based", "Shadow Work", "Day in the Life"]
     @State private var todaysDate: Date = Date.now
-    @State private var journalCategory = "Stream of Consciousness"
+    @State private var journalCategory = "Flow of Thoughts"
     var body: some View {
         NavigationView {
             ZStack {
                 Color(red: 150/255, green: 172/255, blue: 132/255)
                     .ignoresSafeArea()
                 VStack {
+                    Text("Add your journal entry here")
+                        .font(.system(size: 28, weight: .bold))
+                        .frame(height: 30)
                     HStack {
                         TextField("Insert Title Here", text: $title)
                             .padding()
@@ -44,12 +47,18 @@ struct JournalPage: View {
                             }
                         }
                         .pickerStyle(.automatic)
+                        .background(.white)
+                        .cornerRadius(10)
+                        //.frame(width: 200, height: 35)
                         
                         DatePicker("", selection: $todaysDate, displayedComponents: .date)
                     
-                            
-                        
                     }
+                    
+                    Spacer()
+                    Spacer()
+                    Spacer()
+                    
                     TextEditor(text: $longResponse)
                         .scrollContentBackground(.hidden)
                         .background(Color(red:193/255, green:225/235, blue: 193/255))

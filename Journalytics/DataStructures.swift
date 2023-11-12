@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+
 struct JournalEntry: Identifiable, Hashable {
     let id = UUID()
     let title: String
@@ -16,12 +18,20 @@ struct JournalEntry: Identifiable, Hashable {
 
 struct Gratitude: Identifiable, Hashable {
     let id = UUID()
-    let gratitudes = ["", "", ""]
+    let gratitudes: [String]
     let creationDate: Date
 }
 
 struct todaysMood: Identifiable, Hashable {
     let id = UUID()
-    let mood = ""
+    let mood: String
     let creationDate: Date
+}
+
+struct resourceCards: Identifiable {
+    let id = UUID()
+    let title: String
+    let entry: String
+    let image: Image
+    let urls: [URL]
 }

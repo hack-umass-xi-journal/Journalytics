@@ -21,13 +21,13 @@ struct AppStorage: View {
             Button("Save".uppercased()) {
                 let name: String = "User X"
                 currentUserName = name
-                UserDefaults.standard.set (name, forKey = "name" )
+                UserDefaults.standard.setValue(name, forKey: "name")
                 
             }
             
         }
         .onAppear() {
-            currentUserName = UserDefaults.standard.string(forKey: <#T##String#>)
+            currentUserName = UserDefaults.standard.string(forKey: "name")
         }
     }
 }
