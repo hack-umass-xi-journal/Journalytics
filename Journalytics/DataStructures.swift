@@ -34,21 +34,9 @@ struct resourceCards: Identifiable, Hashable {
     var entry: String
     var imageText: String
     var image: Image {
-        Image(imageText)
+        Image(systemName: imageText)
     }
-    var urls: [URL]
+    var urls: URL
 }
 
-class JournalViewModel: ObservableObject {
-    @Published var journalEntries: [JournalEntry] = []
 
-    init () {
-        self.journalEntries.append(JournalEntry(title: "my first", entry: "abc", creationDate: Date.now, category: "Idea"))
-    }
-    func addNewEntry(journalEntry: JournalEntry){
-        journalEntries.append(journalEntry)
-    }
-    func deleteJournalEntry(index: IndexSet){
-        journalEntries.remove(atOffsets: index)
-    }
-}

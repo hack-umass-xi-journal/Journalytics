@@ -11,7 +11,7 @@ struct JournalPage: View {
     
     @State var journalEntry: JournalEntry
     
-    var typesOfJournaling = ["Flow of Thoughts", "Idea", "Prompt-Based", "Shadow Work", "Day in the Life"]
+    var typesOfJournaling = ["Flow of Thoughts", "Idea", "Prompt-Based", "Day in the Life"]
     @ObservedObject var journalEntries: JournalViewModel
     
     var body: some View {
@@ -31,7 +31,9 @@ struct JournalPage: View {
                             .background(.white)
                             .cornerRadius(10)
                         Button("Done"){
+                            
                             journalEntries.addNewEntry(journalEntry: journalEntry)
+                            
                         }
                         .padding()
                         .clipShape(Capsule())
@@ -50,7 +52,7 @@ struct JournalPage: View {
                         .pickerStyle(.automatic)
                         .background(.white)
                         .cornerRadius(10)
-                        //.frame(width: 200, height: 35)
+                        
                         
                         DatePicker("", selection: $journalEntry.creationDate, displayedComponents: .date)
                     
@@ -67,10 +69,16 @@ struct JournalPage: View {
                 }
                 .padding()
             }
+            .toolbar {
+                ToolbarItem {
+                    NavigationLink(destination: InformationPage(), label: {
+                        Image(systemName: "questionmark.circle")
+                    })
+                        
+                }
+            }
             
-        }
-        
-        
+        } 
         
     }
 }

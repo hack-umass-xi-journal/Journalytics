@@ -7,12 +7,33 @@
 
 import SwiftUI
 
+class JournalViewModel: ObservableObject {
+    @Published var journalEntries: [JournalEntry] = []
+
+    init () {
+        getData()
+    }
+    func addNewEntry(journalEntry: JournalEntry){
+        journalEntries.append(journalEntry)
+    }
+    func deleteJournalEntry(index: IndexSet){
+        journalEntries.remove(atOffsets: index)
+    }
+    
+    var entries: [JournalEntry]  = [JournalEntry(title: "my first", entry: "abc", creationDate: Date(), category: "Idea"), JournalEntry(title: "my second", entry: "abc", creationDate: Date(), category: "Idea")]
+    
+    func getData() {
+        self.journalEntries.append(contentsOf: entries)
+    }
+}
+
 struct HomePage: View {
     @State var gratitudes = ["", "", ""]
     @State var todaysMood = ""
     @State var showJournalPage: Bool = false
     @State var showResourcesPage: Bool = false
-    @StateObject var journalEntries: JournalViewModel = JournalViewModel()
+    
+    @StateObject var journalEntriesList: JournalViewModel = JournalViewModel()
     var body: some View {
         
         NavigationView {
@@ -30,7 +51,7 @@ struct HomePage: View {
                     
                     HStack {
                         
-                        NavigationLink(destination: ListOfJournals(journalEntries: journalEntries),
+                        NavigationLink(destination: ListOfJournals(journalEntries: journalEntriesList),
                                        label: {
                             Text("Journal")
                                 .font(.system(size: 20))
@@ -63,6 +84,8 @@ struct HomePage: View {
                         .cornerRadius(10)
                         
                     }
+                    
+                    
                     
                     .padding(.top)
                     
