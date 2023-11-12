@@ -78,6 +78,9 @@ struct HomePage: View {
                                                 
                                             TextField("", text: $gratitudes[1])
                                             TextField("", text: $gratitudes[2])
+                                        
+                                                UserDefault s.standard.set
+                                            }
                                         } header: {
                                             Text("List three things you are grateful for!").font(.system(size: 12)).foregroundColor(.white)
                                         }

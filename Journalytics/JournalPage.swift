@@ -1,4 +1,4 @@
-//
+
 //  JournalPage.swift
 //  Journalytics
 //
