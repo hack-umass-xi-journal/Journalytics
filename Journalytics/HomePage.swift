@@ -12,6 +12,7 @@ struct HomePage: View {
     @State var todaysMood = ""
     @State var showJournalPage: Bool = false
     @State var showResourcesPage: Bool = false
+    @StateObject var journalEntries: JournalViewModel = JournalViewModel()
     var body: some View {
         
         NavigationView {
@@ -29,7 +30,8 @@ struct HomePage: View {
                     
                     HStack {
                         
-                        Button(action: { showJournalPage = true }) {
+                        NavigationLink(destination: ListOfJournals(journalEntries: journalEntries),
+                                       label: {
                             Text("Journal")
                                 .font(.system(size: 20))
                                 .foregroundColor(.white)
@@ -40,35 +42,23 @@ struct HomePage: View {
                             
                             Image(systemName: "book.fill")
                                 .foregroundColor(.black)
-                            
-                            NavigationLink("", destination:  JournalPage(), isActive:$showJournalPage)
-                            
-                            Spacer()
-                            
-                        }
+                        })
                         .background(Color(red: 182/255, green: 186/255, blue: 164/255))
                         .cornerRadius(10)
                         
-                        Spacer()
-                        
-                        Button(action: { showResourcesPage = true })
-                        {
-                            Spacer()
-                            Image(systemName: "arrow.triangle.turn.up.right.diamond.fill")
-                                .foregroundColor(.black)
-                            
+                        NavigationLink(destination: ResourcesPage(),
+                                       label: {
                             Text("Resources")
                                 .font(.system(size: 20))
                                 .foregroundColor(.white)
                                 .fontWeight(.bold)
-                                .frame(width: 100, height: 20)
+                                .frame(width: 75, height: 20)
                                 .padding(.all,10)
                                 .foregroundColor(.blue)
                             
-                            NavigationLink("", destination:  ResourcesPage(), isActive: $showResourcesPage)
-                            
-                        }
-                        
+                            Image(systemName: "info.circle")
+                                .foregroundColor(.black)
+                        })
                         .background(Color(red: 182/255, green: 186/255, blue: 164/255))
                         .cornerRadius(10)
                         

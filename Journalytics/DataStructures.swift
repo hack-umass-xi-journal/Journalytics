@@ -10,10 +10,10 @@ import SwiftUI
 
 struct JournalEntry: Identifiable, Hashable {
     let id = UUID()
-    let title: String
-    let entry: String
-    let creationDate: Date
-    let category: String
+    var title: String
+    var entry: String
+    var creationDate: Date
+    var category: String
 }
 
 struct Gratitude: Identifiable, Hashable {
@@ -28,10 +28,27 @@ struct todaysMood: Identifiable, Hashable {
     let creationDate: Date
 }
 
-struct resourceCards: Identifiable {
+struct resourceCards: Identifiable, Hashable {
     let id = UUID()
-    let title: String
-    let entry: String
-    let image: Image
-    let urls: [URL]
+    var title: String
+    var entry: String
+    var imageText: String
+    var image: Image {
+        Image(imageText)
+    }
+    var urls: [URL]
+}
+
+class JournalViewModel: ObservableObject {
+    @Published var journalEntries: [JournalEntry] = []
+
+    init () {
+        self.journalEntries.append(JournalEntry(title: "my first", entry: "abc", creationDate: Date.now, category: "Idea"))
+    }
+    func addNewEntry(journalEntry: JournalEntry){
+        journalEntries.append(journalEntry)
+    }
+    func deleteJournalEntry(index: IndexSet){
+        journalEntries.remove(atOffsets: index)
+    }
 }

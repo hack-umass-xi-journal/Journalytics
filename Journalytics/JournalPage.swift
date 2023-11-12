@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct JournalPage: View {
-    @State private var title = ""
-    @State private var longResponse = ""
-    private var typesOfJournaling = ["Flow of Thoughts", "Idea", "Prompt-Based", "Shadow Work", "Day in the Life"]
-    @State private var todaysDate: Date = Date.now
-    @State private var journalCategory = "Flow of Thoughts"
+    
+    @State var journalEntry: JournalEntry
+    
+    var typesOfJournaling = ["Flow of Thoughts", "Idea", "Prompt-Based", "Shadow Work", "Day in the Life"]
+    @ObservedObject var journalEntries: JournalViewModel
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -23,14 +24,14 @@ struct JournalPage: View {
                         .font(.system(size: 28, weight: .bold))
                         .frame(height: 30)
                     HStack {
-                        TextField("Insert Title Here", text: $title)
+                        TextField("Insert Title Here", text: $journalEntry.title)
                             .padding()
                             .frame(width: 250, height: 35)
                             .clipShape(Capsule())
                             .background(.white)
                             .cornerRadius(10)
                         Button("Done"){
-                            print("saved")
+                            journalEntries.addNewEntry(journalEntry: journalEntry)
                         }
                         .padding()
                         .clipShape(Capsule())
@@ -41,7 +42,7 @@ struct JournalPage: View {
                         
                     }
                     HStack {
-                        Picker("Category", selection: $journalCategory){
+                        Picker("Category", selection: $journalEntry.category){
                             ForEach(typesOfJournaling, id: \.self){
                                 Text($0)
                             }
@@ -51,7 +52,7 @@ struct JournalPage: View {
                         .cornerRadius(10)
                         //.frame(width: 200, height: 35)
                         
-                        DatePicker("", selection: $todaysDate, displayedComponents: .date)
+                        DatePicker("", selection: $journalEntry.creationDate, displayedComponents: .date)
                     
                     }
                     
@@ -59,7 +60,7 @@ struct JournalPage: View {
                     Spacer()
                     Spacer()
                     
-                    TextEditor(text: $longResponse)
+                    TextEditor(text: $journalEntry.entry)
                         .scrollContentBackground(.hidden)
                         .background(Color(red:193/255, green:225/235, blue: 193/255))
                         .cornerRadius(10)
@@ -75,5 +76,5 @@ struct JournalPage: View {
 }
 
 #Preview {
-    JournalPage()
+    JournalPage(journalEntry: JournalEntry(title: "", entry: "", creationDate: Date.now, category: "Flow of Thoughts"), journalEntries: JournalViewModel())
 }

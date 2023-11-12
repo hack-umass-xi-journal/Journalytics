@@ -8,28 +8,50 @@
 import SwiftUI
 
 struct ListOfJournals: View {
-    @State var entries = [JournalEntry(title: "Title 1",
-                                               entry: "Entry 1",
-                                               creationDate: Date(),                                            category: "Stream of Consciousness"),
-                                  JournalEntry(title: "Title 2",
-                                               entry: "Entry 2",
-                                               creationDate: Date(),      category: "Day in the Life"),
-                                  JournalEntry(title: "Title 3",
-                                               entry: "Entry 3",creationDate: Date(),
-                                               category: "Shallow Work")]
+    @ObservedObject var journalEntries: JournalViewModel
+    var newEntry = JournalEntry(title: "", entry: "", creationDate: Date.now, category: "Flow of Thoughts")
     
     var body: some View {
-        Text("Journal Entries")
-            .font(.system(size: 32, weight: .bold))
-        
-        List {
-            ForEach(entries, id: \.self){
-                Text($0.title)
+        NavigationView {
+            Text("Journal Entries")
+                .font(.system(size: 32, weight: .bold))
+                .toolbar {
+                    ToolbarItem {
+                        NavigationLink(destination: JournalPage( journalEntry: newEntry, journalEntries: journalEntries),
+                                       label: {
+                            Image(systemName: "plus")
+                        })
+                        .onTapGesture {
+                            journalEntries.journalEntries.append(newEntry)
+                        }
+                    }
+                }
+            
+            ForEach(journalEntries.journalEntries) { journal in
+                NavigationLink(destination: JournalPage(journalEntry: journal, journalEntries: journalEntries),
+                               label: {
+                    Text(journal.title)
+                })
+                
+                
+                    
+                    
             }
+            
+        
+            
         }
+        
+        Spacer()
+        
+        
+        
+        
     }
+        
 }
 
+
 #Preview {
-    ListOfJournals()
+    ListOfJournals(journalEntries: JournalViewModel())
 }

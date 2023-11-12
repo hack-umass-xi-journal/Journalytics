@@ -9,6 +9,11 @@ import SwiftUI
 
 struct ResourcesPage: View {
     var body: some View {
+    
+        @State var resources: [resourceCards] = [
+            resourceCards(title: "CCPH @ UMass", entry: "Center for Counseling and Psychological Health", imageText: "logo", urls: [URL(string: "https://www.umass.edu/counseling")!]),
+            resourceCards(title: "Help Line", entry: "Massachusetts Behavioral Health Hot Line", imageText:"logo", urls: [URL(string: "https://www.masshelpline.com")!]),
+            resourceCards(title: "Dept. of Mental Health", entry: "Massachusetts Department of Mental Health", imageText:"logo", urls: [URL(string: "https://www.mass.gov/orgs/massachusetts-department-of-mental-health")!])]
         
         NavigationView {
             ZStack {
@@ -20,23 +25,17 @@ struct ResourcesPage: View {
                         .font(.system(size: 32, weight: .bold))
                         .frame(height: 30)
                     
-                    Text("")
-                    
-                    Text("[UMass CCPH](https://www.umass.edu/counseling)")
-                    
-                    Text("[Groups and Workshops Calendar](https://www.umass.edu/counseling/groups-and-workshops-topic)")
-                        .frame(width: 1000)
-                    
-                    Text("[Massachusetts BHHL](https://www.masshelpline.com)")
-                    
-                    Text("[Massachusetts DMH](https://www.mass.gov/orgs/massachusetts-department-of-mental-health)")
-                    
-                    //.foregroundColor(.white)
-                    //.background(Color(red: 150/255, green: 172/255, blue: 132/255))
-                    
-                    Spacer()
+                    ForEach(resources, id: \.self) { resource in
+                        VStack {
+                            Text(resource.title)
+                        }
+                    }
                     
                 }
+                    
+              Spacer()
+                    
+            
             }
         }
         
